@@ -1,4 +1,4 @@
-const statement = require("./rental_calculator");
+const getRentalStatement = require("./rental_calculator");
 
 let customer = {
   name: "martin",
@@ -11,4 +11,4 @@ let movies = {
 };
 
 /* eslint-disable no-console */
-console.log(statement(customer, movies));
+console.log(getRentalStatement(customer, movies));
