@@ -1,6 +1,7 @@
 class Customer {
-  constructor({ name }) {
+  constructor({ name, rentals }) {
     this.name = name;
+    this.rentals = rentals;
   }
 }
 
