@@ -13,10 +13,8 @@ function createMovie(rental, movies) {
 function calculateRenterPoints(rentals) {
   let frequentRenterPoints = 0;
   for (let rental of rentals) {
-    //add frequent renter points
     frequentRenterPoints++;
-    // add bonus for a two day new release rental
-    if (rental.movie.code === "new" && rental.days > 2) frequentRenterPoints++;
+    if (rental.isEligibleForBonusRenterPoint()) frequentRenterPoints++;
   }
   return frequentRenterPoints;
 }

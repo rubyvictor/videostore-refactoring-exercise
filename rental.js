@@ -29,6 +29,10 @@ class Rental {
     }
     return thisAmount;
   }
+
+  isEligibleForBonusRenterPoint() {
+    return this.movie.code === "new" && this.days > 2;
+  }
 }
 
 module.exports = Rental;
