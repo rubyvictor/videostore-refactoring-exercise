@@ -1,8 +1,12 @@
-module.exports = function statement(customer, movies) {
+const Customer = require("./customer");
+
+module.exports = function statement(customerRecord, movies) {
+  let customer = new Customer({ name: customerRecord.name });
+
   let totalAmount = 0;
   let frequentRenterPoints = 0;
   let result = `Rental Record for ${customer.name}\n`;
-  for (let r of customer.rentals) {
+  for (let r of customerRecord.rentals) {
     let movie = movies[r.movieID];
     let thisAmount = 0;
 
@@ -41,4 +45,4 @@ module.exports = function statement(customer, movies) {
   result += `You earned ${frequentRenterPoints} frequent renter points\n`;
 
   return result;
-}
+};
