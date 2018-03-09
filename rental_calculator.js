@@ -21,21 +21,28 @@ module.exports = function statement(customerRecord, movies) {
       })
   );
 
-  let totalCost = 0;
-  let frequentRenterPoints = 0;
   let result = `Rental Record for ${customer.name}\n`;
+
   for (let rental of rentals) {
     let rentalCost = rental.getCost();
+    //print figures for this rental
+    result += `\t${rental.movie.title}\t${rentalCost}\n`;
+  }
 
+  let frequentRenterPoints = 0;
+  for (let rental of rentals) {
     //add frequent renter points
     frequentRenterPoints++;
     // add bonus for a two day new release rental
     if (rental.movie.code === "new" && rental.days > 2) frequentRenterPoints++;
+  }
 
-    //print figures for this rental
-    result += `\t${rental.movie.title}\t${rentalCost}\n`;
+  let totalCost = 0;
+  for (let rental of rentals) {
+    let rentalCost = rental.getCost();
     totalCost += rentalCost;
   }
+
   // add footer lines
   result += `Amount owed is ${totalCost}\n`;
   result += `You earned ${frequentRenterPoints} frequent renter points\n`;
