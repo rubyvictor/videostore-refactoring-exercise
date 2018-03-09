@@ -25,7 +25,7 @@ module.exports = function statement(customerRecord, movies) {
   let frequentRenterPoints = 0;
   let result = `Rental Record for ${customer.name}\n`;
   for (let rental of rentals) {
-    let movie = movies[rental.movie.id];
+    let movie = rental.movie;
     let thisAmount = 0;
 
     // determine amount for each movie
