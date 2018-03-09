@@ -21,11 +21,11 @@ module.exports = function statement(customerRecord, movies) {
       })
   );
 
-  let totalAmount = 0;
+  let totalCost = 0;
   let frequentRenterPoints = 0;
   let result = `Rental Record for ${customer.name}\n`;
   for (let rental of rentals) {
-    let thisAmount = rental.getBill();
+    let rentalCost = rental.getCost();
 
     //add frequent renter points
     frequentRenterPoints++;
@@ -33,11 +33,11 @@ module.exports = function statement(customerRecord, movies) {
     if (rental.movie.code === "new" && rental.days > 2) frequentRenterPoints++;
 
     //print figures for this rental
-    result += `\t${rental.movie.title}\t${thisAmount}\n`;
-    totalAmount += thisAmount;
+    result += `\t${rental.movie.title}\t${rentalCost}\n`;
+    totalCost += rentalCost;
   }
   // add footer lines
-  result += `Amount owed is ${totalAmount}\n`;
+  result += `Amount owed is ${totalCost}\n`;
   result += `You earned ${frequentRenterPoints} frequent renter points\n`;
 
   return result;

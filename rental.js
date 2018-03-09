@@ -4,7 +4,7 @@ class Rental {
     this.days = days;
   }
 
-  getBill() {
+  getCost() {
     let thisAmount = 0;
 
     // determine amount for each movie
