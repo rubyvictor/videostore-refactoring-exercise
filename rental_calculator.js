@@ -10,6 +10,17 @@ function createMovie(rental, movies) {
   });
 }
 
+function calculateRenterPoints(rentals) {
+  let frequentRenterPoints = 0;
+  for (let rental of rentals) {
+    //add frequent renter points
+    frequentRenterPoints++;
+    // add bonus for a two day new release rental
+    if (rental.movie.code === "new" && rental.days > 2) frequentRenterPoints++;
+  }
+  return frequentRenterPoints;
+}
+
 module.exports = function statement(customerRecord, movies) {
   let customer = new Customer({ name: customerRecord.name });
 
@@ -29,14 +40,6 @@ module.exports = function statement(customerRecord, movies) {
     result += `\t${rental.movie.title}\t${rentalCost}\n`;
   }
 
-  let frequentRenterPoints = 0;
-  for (let rental of rentals) {
-    //add frequent renter points
-    frequentRenterPoints++;
-    // add bonus for a two day new release rental
-    if (rental.movie.code === "new" && rental.days > 2) frequentRenterPoints++;
-  }
-
   let totalCost = 0;
   for (let rental of rentals) {
     let rentalCost = rental.getCost();
@@ -45,7 +48,9 @@ module.exports = function statement(customerRecord, movies) {
 
   // add footer lines
   result += `Amount owed is ${totalCost}\n`;
-  result += `You earned ${frequentRenterPoints} frequent renter points\n`;
+  result += `You earned ${calculateRenterPoints(
+    rentals
+  )} frequent renter points\n`;
 
   return result;
 };
