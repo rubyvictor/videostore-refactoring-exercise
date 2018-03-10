@@ -1,14 +1,10 @@
-var Customer = require("./customer");
-var {Movie,NewMovie,RegularMovie,childrenMovie } = require("./movie.js");
-var Rental = require("./rental.js");
-
-module.exports = function statement(customer, movies) {
+export function statement(customer, movies) {
   let totalAmount = 0;
-  let thisAmount = 0;
+  let frequentRenterPoints = 0;
   let result = `Rental Record for ${customer.name}\n`;
-
   for (let r of customer.rentals) {
     let movie = movies[r.movieID];
+    let thisAmount = 0;
 
     // determine amount for each movie
     switch (movie.code) {
@@ -30,25 +26,19 @@ module.exports = function statement(customer, movies) {
       default:
         throw new Error("Invalid move type:" + movie.code);
     }
-    return thisAmount;
-  }
 
-  let frequentRenterPoints = 0;
-  for (let r of customer.rentals) {
+    //add frequent renter points
     frequentRenterPoints++;
     // add bonus for a two day new release rental
-    if (movies.code === "new" && r.days > 2) frequentRenterPoints++;
-  }
+    if (movie.code === "new" && r.days > 2) frequentRenterPoints++;
 
-  //add frequent renter points
-
-  for (let r of customer.rentals) {
     //print figures for this rental
-    result += `\t${r.movie.title}\t${thisAmount}\n`;
+    result += `\t${movie.title}\t${thisAmount}\n`;
     totalAmount += thisAmount;
-    // add footer lines
-    result += `Amount owed is ${totalAmount}\n`;
-    result += `You earned ${frequentRenterPoints} frequent renter points\n`;
-    return result;
   }
-};
+  // add footer lines
+  result += `Amount owed is ${totalAmount}\n`;
+  result += `You earned ${frequentRenterPoints} frequent renter points\n`;
+
+  return result;
+}
