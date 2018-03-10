@@ -11,25 +11,36 @@ function createMovie(rental, movies) {
 }
 
 module.exports = function statement(customerRecord, movies) {
-  let customer = new Customer({ name: customerRecord.name });
+  let customer = new Customer({
+    name: customerRecord.name
+  });
   let rentals = customerRecord.rentals.map(
     rental =>
-      new Rental({ movie: createMovie(rental, movies), days: rental.days })
+      new Rental({
+        movie: createMovie(rental, movies),
+        days: rental.days
+      })
   );
 
-  let totalCost = 0;
-  let frequentRenterPoints = 0;
   let result = `Rental Record for ${customer.name}\n`;
+
   for (let rental of rentals) {
     let rentalCost = rental.getCost();
-
-    //add frequent renter points
-    frequentRenterPoints++;
-    // add bonus for a two day new release rental
-    if (rental.movie.code === "new" && rental.days > 2) frequentRenterPoints++;
-
-    //print figures for this rental
     result += `\t${rental.movie.title}\t${rentalCost}\n`;
+  }
+  //add frequent renter points
+  let frequentRenterPoints = 0;
+  for (let rental of rentals) {
+    frequentRenterPoints++;
+    if (rental.movie.code === "new" && rental.days > 2) frequentRenterPoints++;
+  }
+
+  // add bonus for a two day new release rental
+
+  //print figures for this rental
+  let totalCost = 0;
+  for (let rental of rentals) {
+    let rentalCost = rental.getCost();
     totalCost += rentalCost;
   }
   // add footer lines
