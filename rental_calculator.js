@@ -14,7 +14,7 @@ function calculateRenterPoints(rentals) {
   let frequentRenterPoints = 0;
   for (let rental of rentals) {
     frequentRenterPoints++;
-    if (rental.movie.code === "new" && rental.days > 2) frequentRenterPoints++;
+    if (rental.isEligibleForBonusRenterPoint()) frequentRenterPoints++;
   }
   return frequentRenterPoints;
 }
