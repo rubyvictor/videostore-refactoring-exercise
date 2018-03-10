@@ -20,13 +20,11 @@ function calculateRenterPoints(rentals, customer) {
 }
 
 function getTotalCost(rentals) {
-  let totalCost = 0;
-  for (let rental of rentals) {
-    let rentalCost = rental.getCost();
-    totalCost += rentalCost;
-  }
-  return totalCost;
+  return rentals.map(rental => rental.getCost()).reduce((a, b) => {
+    return a + b;
+  }, 0);
 }
+
 module.exports = function statement(customerRecord, movies) {
   let customer = new Customer({
     name: customerRecord.name
