@@ -1,4 +1,4 @@
-import { statement } from "./rental_calculator";
+const statement = require("./rental_calculator");
 
 const regularMovie = {
   movieID: "F001",
