@@ -37,17 +37,13 @@ module.exports = function statement(customerRecord, movies) {
     let rentalCost = rental.getCost();
     result += `\t${rental.movie.title}\t${rentalCost}\n`;
   }
-  //add frequent renter points
 
-  // add bonus for a two day new release rental
-
-  //print figures for this rental
   let totalCost = 0;
   for (let rental of rentals) {
     let rentalCost = rental.getCost();
     totalCost += rentalCost;
   }
-  // add footer lines
+
   result += `Amount owed is ${totalCost}\n`;
   result += `You earned ${calculateRenterPoints(
     rentals
