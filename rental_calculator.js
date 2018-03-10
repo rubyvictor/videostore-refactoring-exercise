@@ -19,6 +19,14 @@ function calculateRenterPoints(rentals) {
   return frequentRenterPoints;
 }
 
+function getTotalCost(rentals) {
+  let totalCost = 0;
+  for (let rental of rentals) {
+    let rentalCost = rental.getCost();
+    totalCost += rentalCost;
+  }
+  return totalCost;
+}
 module.exports = function statement(customerRecord, movies) {
   let customer = new Customer({
     name: customerRecord.name
@@ -38,13 +46,7 @@ module.exports = function statement(customerRecord, movies) {
     result += `\t${rental.movie.title}\t${rentalCost}\n`;
   }
 
-  let totalCost = 0;
-  for (let rental of rentals) {
-    let rentalCost = rental.getCost();
-    totalCost += rentalCost;
-  }
-
-  result += `Amount owed is ${totalCost}\n`;
+  result += `Amount owed is ${getTotalCost(rentals)}\n`;
   result += `You earned ${calculateRenterPoints(
     rentals
   )} frequent renter points\n`;
