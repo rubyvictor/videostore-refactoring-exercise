@@ -1,13 +1,27 @@
 const Customer = require("./customer");
+const Rental = require("./rental");
+const Movie = require("./movie");
+
+function createMovie(rental, movies) {
+  return new Movie({
+    id: rental.movieID,
+    title: movies[rental.movieID].title,
+    code: movies[rental.movieID].code
+  });
+}
 
 module.exports = function statement(customerRecord, movies) {
   let customer = new Customer({ name: customerRecord.name });
+  let rentals = customerRecord.rentals.map(
+    rental =>
+      new Rental({ movie: createMovie(rental, movies), days: rental.days })
+  );
 
   let totalAmount = 0;
   let frequentRenterPoints = 0;
   let result = `Rental Record for ${customer.name}\n`;
-  for (let r of customerRecord.rentals) {
-    let movie = movies[r.movieID];
+  for (let r of rentals) {
+    let movie = movies[r.movie.id];
     let thisAmount = 0;
 
     // determine amount for each movie
