@@ -10,13 +10,13 @@ function createMovie(rental, movies) {
   });
 }
 
-function calculateRenterPoints(rentals) {
-  let frequentRenterPoints = 0;
+function calculateRenterPoints(rentals, customer) {
   for (let rental of rentals) {
-    frequentRenterPoints++;
-    if (rental.isEligibleForBonusRenterPoint()) frequentRenterPoints++;
+    customer.incrementRentalPoints();
+    if (rental.isEligibleForBonusRenterPoint())
+      customer.incrementRentalPoints();
   }
-  return frequentRenterPoints;
+  return customer.frequentRenterPoints;
 }
 
 function getTotalCost(rentals) {
@@ -48,7 +48,8 @@ module.exports = function statement(customerRecord, movies) {
 
   result += `Amount owed is ${getTotalCost(rentals)}\n`;
   result += `You earned ${calculateRenterPoints(
-    rentals
+    rentals,
+    customer
   )} frequent renter points\n`;
 
   return result;
